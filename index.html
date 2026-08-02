@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Water Quality Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="logo">💧</div>
+
+    <h1>💧 Smart Water Quality Prediction</h1>
+
+    <p class="subtitle">
+        AI-powered system that predicts drinking water safety using Machine Learning and provides detailed water quality analysis.
+</p>
+
+    <form action="/predict" method="POST">
+
+        <div class="form-grid">
+
+            <div>
+                <label>pH</label>
+                <input type="number" step="any" name="ph" value="{{ ph if ph is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Hardness</label>
+                <input type="number" step="any" name="hardness" value="{{ hardness if hardness is defined else '' }}" required>
+            </div>
+            <div>
+                <label>Solids</label>
+               <input type="number" step="any" name="solids" value="{{ solids if solids is defined else '' }}" required>
+            </div>
+            <div>
+                <label>Chloramines</label>
+                <input type="number" step="any" name="chloramines" value="{{ chloramines if chloramines is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Sulfate</label>
+                <input type="number" step="any" name="sulfate" value="{{ sulfate if sulfate is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Conductivity</label>
+                <input type="number" step="any" name="conductivity" value="{{ conductivity if conductivity is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Organic Carbon</label>
+                <input type="number" step="any" name="organic_carbon" value="{{ organic_carbon if organic_carbon is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Trihalomethanes</label>
+                <input type="number" step="any" name="trihalomethanes" value="{{ trihalomethanes if trihalomethanes is defined else '' }}" required>
+            </div>
+
+            <div>
+                <label>Turbidity</label>
+                <input type="number" step="any" name="turbidity" value="{{ turbidity if turbidity is defined else '' }}" required>
+            </div>
+
+        </div>
+
+        <button type="submit">🔍 Analyze Water Quality</button>
+
+    </form>
+
+    {% if prediction %}
+
+<div class="result {{ color }}">
+    <h2>💧Prediction Result</h2>
+    <h3>{{ prediction }}</h3>
+    <p class="result-text">
+        The prediction is generated using a trained Machine Learning model
+        based on the water quality parameters entered by the user.
+    </p>
+</div>
+
+<br>
+
+<h2 class="analysis-title">📊 Water Quality Analysis</h2>
+
+<table class="analysis-table">
+    <tr>
+        <th>Parameter</th>
+        <th>Your Value</th>
+        <th>Ideal Range</th>
+        <th>Status</th>
+    </tr>
+
+    {% for item in analysis %}
+    <tr>
+        <td>{{ item[0] }}</td>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+<div class="score-card">
+    <h2>⭐ Water Quality Score</h2>
+    <h1>{{ water_score }}/100</h1>
+
+    {% if water_score >= 80 %}
+        <p class="excellent">🟢 Excellent Water Quality</p>
+    {% elif water_score >= 60 %}
+        <p class="good">🟡 Good Water Quality</p>
+    {% else %}
+        <p class="poor">🔴 Poor Water Quality</p>
+    {% endif %}
+</div>
+<div class="recommendation-card">
+    <h2>💡 Smart Recommendations</h2>
+
+    <ul>
+        {% for item in recommendations %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endif %}
+<hr>
+
+<div class="about-section">
+    <h2>ℹ️ About This Project</h2>
+
+    <p>
+        This project uses a Machine Learning model to predict whether water
+        is safe for drinking based on nine important water quality parameters.
+        It also provides a detailed analysis, a water quality score, and
+        smart recommendations to help users understand the results.
+    </p>
+</div>
+
+<hr>
+
+<div class="footer">
+    <p><strong>Developed By</strong></p>
+    <p>Neelam Bindhu Madhuri and team</p>
+    <p>BCA Data Science</p>
+    <p>Aditya Degree College for Women</p>
+</div>
+</div>
+
+</body>
+</html>
